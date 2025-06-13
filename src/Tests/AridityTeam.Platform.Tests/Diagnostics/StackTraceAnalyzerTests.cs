@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using Xunit;
 using AridityTeam.Platform.Diagnostics.Diagnostics;
 using System.Diagnostics;
 

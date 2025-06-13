@@ -1,6 +1,5 @@
 using System;
 using System.Threading;
-using Xunit;
 using AridityTeam.Platform.Diagnostics.Diagnostics;
 using System.Collections.Generic;
 

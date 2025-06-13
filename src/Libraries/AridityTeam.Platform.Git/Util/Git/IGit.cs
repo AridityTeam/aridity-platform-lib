@@ -24,6 +24,22 @@ using System;
 namespace AridityTeam.Util.Git;
 
 /// <summary>
+/// Configuration for Git operations.
+/// </summary>
+public interface IGitConfiguration
+{
+    /// <summary>
+    /// Gets the path to the Git executable.
+    /// </summary>
+    string GitExecutablePath { get; }
+
+    /// <summary>
+    /// Gets whether to use shell execution for Git commands.
+    /// </summary>
+    bool UseShellExecution { get; }
+}
+
+/// <summary>
 /// Wraps Git functions.
 /// </summary>
 public interface IGit : IDisposable
@@ -103,4 +119,49 @@ public interface IGit : IDisposable
     /// <param name="filePath">Path to file to be updated.</param>
     /// <returns><see langword="true"/> on success.</returns>
     bool Add(string repoPath, string filePath);
+
+    /// <summary>
+    /// Creates a new branch in the repository.
+    /// </summary>
+    /// <param name="repoPath">Path to local repository.</param>
+    /// <param name="branchName">Name of the new branch.</param>
+    /// <returns><see langword="true"/> on success.</returns>
+    bool CreateBranch(string repoPath, string branchName);
+
+    /// <summary>
+    /// Switches to the specified branch.
+    /// </summary>
+    /// <param name="repoPath">Path to local repository.</param>
+    /// <param name="branchName">Name of the branch to switch to.</param>
+    /// <returns><see langword="true"/> on success.</returns>
+    bool Checkout(string repoPath, string branchName);
+
+    /// <summary>
+    /// Gets the current branch name.
+    /// </summary>
+    /// <param name="repoPath">Path to local repository.</param>
+    /// <returns>The name of the current branch.</returns>
+    string GetCurrentBranch(string repoPath);
+
+    /// <summary>
+    /// Gets the status of the repository.
+    /// </summary>
+    /// <param name="repoPath">Path to local repository.</param>
+    /// <returns>A string containing the status information.</returns>
+    string GetStatus(string repoPath);
+
+    /// <summary>
+    /// Stashes changes in the working directory.
+    /// </summary>
+    /// <param name="repoPath">Path to local repository.</param>
+    /// <param name="message">Optional stash message.</param>
+    /// <returns><see langword="true"/> on success.</returns>
+    bool Stash(string repoPath, string? message = null);
+
+    /// <summary>
+    /// Applies the most recent stash.
+    /// </summary>
+    /// <param name="repoPath">Path to local repository.</param>
+    /// <returns><see langword="true"/> on success.</returns>
+    bool StashPop(string repoPath);
 }

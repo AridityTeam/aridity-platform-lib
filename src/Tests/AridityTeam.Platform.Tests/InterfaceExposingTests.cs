@@ -21,7 +21,7 @@
 
 using System;
 
-namespace AridityTeam;
+namespace AridityTeam.Platform.Tests;
 
 /// <summary>
 /// Interface exposing tests.
