@@ -78,52 +78,75 @@ public class Git : IGit
     /// <inheritdoc/>
     public bool Clone(Uri remoteUri, string path, int depth = 0)
     {
-        p.StartInfo.Arguments = $"clone --depth \"{depth}\" \"{remoteUri.AbsoluteUri}\" \"{path}\"";
+        p.StartInfo.Arguments = $"clone --progress --depth \"{depth}\" \"{remoteUri.AbsoluteUri}\" \"{path}\"";
+        p.OutputDataReceived += OnOutputDataReceived;
+        p.ErrorDataReceived += OnErrorDataReceived;
+
         if (!p.Start())
             throw new GitException("Could not start \"git.exe\".");
 
-        // TODO -- parse Git output to get it's progress percentage to raise in CloneProgressChanged.
-        // (Updating files part will be raised into CheckoutProgressChanged.)
+        p.BeginOutputReadLine();
+        p.BeginErrorReadLine();
+
         p.WaitForExit();
-        CloneProgressChanged?.Invoke(this, new ProgressChangedEventArgs(100));
-        CheckoutProgressChanged?.Invoke(this, new ProgressChangedEventArgs(100));
+
+        p.OutputDataReceived -= OnOutputDataReceived;
+        p.ErrorDataReceived -= OnErrorDataReceived;
+
         return p.ExitCode == 0;
     }
 
     /// <inheritdoc/>
     public bool Commit(string repoPath, string message)
     {
-        p.StartInfo.Arguments = $"-C \"{repoPath}\" commit -m \"{message}\"";
+        p.StartInfo.Arguments = $"-C \"{repoPath}\" commit --progress -m \"{message}\"";
+        p.OutputDataReceived += OnOutputDataReceived;
+        p.ErrorDataReceived += OnErrorDataReceived;
+
         if (!p.Start())
             throw new GitException("Could not start \"git.exe\".");
 
+        p.BeginOutputReadLine();
+        p.BeginErrorReadLine();
+
         p.WaitForExit();
+
+        p.OutputDataReceived -= OnOutputDataReceived;
+        p.ErrorDataReceived -= OnErrorDataReceived;
+
         return p.ExitCode == 0;
     }
 
     /// <inheritdoc/>
     public bool Fetch(string repoPath, int depth = 0)
     {
-        p.StartInfo.Arguments = $"-C \"{repoPath}\" fetch --depth \"{depth}\"";
+        p.StartInfo.Arguments = $"-C \"{repoPath}\" fetch --progress --depth \"{depth}\"";
+        p.OutputDataReceived += OnOutputDataReceived;
+        p.ErrorDataReceived += OnErrorDataReceived;
+
         if (!p.Start())
             throw new GitException("Could not start \"git.exe\".");
 
+        p.BeginOutputReadLine();
+        p.BeginErrorReadLine();
+
         p.WaitForExit();
-        FetchProgressChanged?.Invoke(this, new ProgressChangedEventArgs(100));
+
+        p.OutputDataReceived -= OnOutputDataReceived;
+        p.ErrorDataReceived -= OnErrorDataReceived;
+
         return p.ExitCode == 0;
     }
 
     /// <inheritdoc/>
     public bool Pull(string repoPath, string remote = "origin", string branch = "master")
     {
-        PullProgressChanged?.Invoke(this, new ProgressChangedEventArgs(100));
         throw new NotImplementedException();
     }
 
     /// <inheritdoc/>
     public bool Push(string repoPath, string remote = "origin", string branch = "master")
     {
-        PushProgressChanged?.Invoke(this, new ProgressChangedEventArgs(100));
         throw new NotImplementedException();
     }
 
@@ -132,5 +155,51 @@ public class Git : IGit
     {
         p.Dispose();
         GC.SuppressFinalize(this);
+    }
+
+    private void OnOutputDataReceived(object sender, DataReceivedEventArgs e)
+    {
+        if (string.IsNullOrEmpty(e.Data)) return;
+        HandleProgressLine(e.Data);
+    }
+
+    private void OnErrorDataReceived(object sender, DataReceivedEventArgs e)
+    {
+        if (string.IsNullOrEmpty(e.Data)) return;
+        HandleProgressLine(e.Data);
+    }
+
+    private void HandleProgressLine(string line)
+    {
+        var progress = GitProgressParser.ParseProgress(line);
+        if (!progress.HasValue) return;
+
+        var (operation, percentage) = progress.Value;
+        var args = new ProgressChangedEventArgs(percentage);
+
+        switch (operation.ToLowerInvariant())
+        {
+            case string s when 
+            s.Contains("receiving") || 
+            s.Contains("resolving"):
+                CloneProgressChanged?.Invoke(this, args);
+                break;
+
+            case string s when s.Contains("updating files"):
+                CheckoutProgressChanged?.Invoke(this, args);
+                break;
+
+            case string s when s.Contains("fetch"):
+                FetchProgressChanged?.Invoke(this, args);
+                break;
+
+            case string s when s.Contains("push"):
+                PushProgressChanged?.Invoke(this, args);
+                break;
+
+            case string s when s.Contains("pull"):
+                PullProgressChanged?.Invoke(this, args);
+                break;
+        }
     }
 }

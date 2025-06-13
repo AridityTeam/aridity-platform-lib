@@ -47,6 +47,6 @@ public class InterfaceExposingTests
         var myInterface = InterfaceExposingShared.GlobalDefs.MyInterfaceInstance;
         Requires.NotNull(myInterface);
 
-        Requires.EqualTo(myInterface.SomeFunction(), true);
+        Requires.True(myInterface.SomeFunction());
     }
 }

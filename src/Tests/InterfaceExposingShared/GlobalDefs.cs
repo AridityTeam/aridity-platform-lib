@@ -26,11 +26,12 @@ namespace InterfaceExposingShared
     public sealed class GlobalDefs
     {
         public const string MYINTERFACE_VERSION_NAME = "MyInterface001";
+        private static IMyInterface? _myInterface = null;
         public static IMyInterface? MyInterfaceInstance
         {
             get
             {
-                return InterfaceExposeUtil.CreateInterface<MyClass, IMyInterface>(MYINTERFACE_VERSION_NAME).Value;
+                return _myInterface ??= InterfaceExposeUtil.CreateInterface<MyClass, IMyInterface>(MYINTERFACE_VERSION_NAME).Value;
             }
         }
     }
