@@ -58,7 +58,7 @@ public static class Requires
         if (value is null)
             throw new NullReferenceException($"String {parameterName} is null!");
 
-        if (value.Length == 0 || value[0] != '\0')
+        if (value.Length == 0 || value[0] == '\0')
             throw new ArgumentException($"'{parameterName}' cannot be an empty string (\"\") or start with the null character.");
     }
 
@@ -71,7 +71,7 @@ public static class Requires
     [DebuggerStepThrough]
     public static void NotNullOrWhiteSpace([ValidatedNotNull, NotNull] string? value, [CallerArgumentExpression(nameof(value))] string? parameterName = null)
     {
-        NotNull(value, parameterName);
+        NotNull(value);
 
         if (string.IsNullOrWhiteSpace(value))
             throw new NullReferenceException($"The argument ({parameterName}) cannot consist entirely of white space characters.");
@@ -89,6 +89,53 @@ public static class Requires
         if (actual != expected)
         {
             throw new ObjectNotEqualException($"Expected \"{expected}\" but got \"{actual}\"");
+        }
+    }
+
+    /// <summary>
+    /// Throws an exception if the specified parameters are not equal to eachother.
+    /// </summary>
+    /// <param name="actual">The value of the actual argument.</param>
+    /// <param name="expected">The value of the expected argument.</param>
+    /// <exception cref="ObjectNotEqualException">Thrown if <paramref name="actual"/> is not equal to <paramref name="expected"/>.</exception>
+    [DebuggerStepThrough]
+    public static void EqualTo(bool actual, bool expected)
+    {
+        if (actual != expected)
+        {
+            throw new ObjectNotEqualException($"Expected \"{expected}\" but got \"{actual}\"");
+        }
+    }
+
+    /// <summary>
+    /// Throws an exception if the condition doesn't return true.
+    /// </summary>
+    /// <param name="condition">The condition to check I guess.</param>
+    /// <param name="message">The value of the message.</param>
+    [DebuggerStepThrough]
+    public static void True(bool condition, string? message = null)
+    {
+        message ??= $"Expected \"True\" but got \"{condition}\"";
+
+        if (!condition)
+        {
+            throw new ArgumentException(message);
+        }
+    }
+
+    /// <summary>
+    /// Throws an exception if the condition doesn't return false.
+    /// </summary>
+    /// <param name="condition">The condition to check I guess.</param>
+    /// <param name="message">The value of the message.</param>
+    [DebuggerStepThrough]
+    public static void False(bool condition, string? message = null)
+    {
+        message ??= $"Expected \"False\" but got \"{condition}\"";
+
+        if (condition)
+        {
+            throw new ArgumentException(message);
         }
     }
 
