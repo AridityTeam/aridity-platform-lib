@@ -70,7 +70,7 @@ jobs:
       if: success() || failure()
       
     - name: Upload test results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@latest
       if: always()
       with:
         name: test-results
