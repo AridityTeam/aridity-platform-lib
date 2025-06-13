@@ -21,6 +21,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using AridityTeam.Util.Logging;
 using AridityTeam.Util.Utils;
 
 namespace AridityTeam;
@@ -54,6 +55,8 @@ public static class InterfaceExposeUtil
 
         if (!string.Equals(@interface.VersionName, versionName))
             throw new ObjectNotEqualException($"Version mismatch. Expected: {versionName}, Got: {@interface.VersionName}");
+
+        Logger.GetLogger("InterfaceExposeUtil").Log($"Exposed \"{typeof(TInterface).Name}\" with \"{typeof(TClass).Name}\".");
 
         return @interface;
     }

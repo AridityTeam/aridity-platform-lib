@@ -27,8 +27,29 @@ namespace AridityTeam.Util.Logging;
 /// <summary>
 /// Ah yes, logging.
 /// </summary>
-public class Logger(bool enableConsoleLogging = true, bool enableFileLogging = false) : ILogger
+public class Logger(string name, bool enableConsoleLogging = true, bool enableFileLogging = false) : ILogger
 {
+    /// <summary>
+    /// Creates a new logger with the specified type.
+    /// </summary>
+    /// <typeparam name="TClass"></typeparam>
+    /// <returns></returns>
+    public static Logger GetLogger<TClass>(bool enableConsoleLogging = true, 
+        bool enableFileLogging = false) where TClass : class, new() =>
+        GetLogger(typeof(TClass).Name, enableConsoleLogging, enableFileLogging);
+
+    /// <summary>
+    /// Creates a new logger with the specified name.
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="enableConsoleLogging"></param>
+    /// <param name="enableFileLogging"></param>
+    /// <returns></returns>
+    public static Logger GetLogger(string name, bool enableConsoleLogging = true, bool enableFileLogging = false)
+    {
+        return new Logger(name, enableConsoleLogging, enableFileLogging);
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -51,7 +72,7 @@ public class Logger(bool enableConsoleLogging = true, bool enableFileLogging = f
 
     private string FormatMessage(string? message, LogLevel level = LogLevel.Info)
     {
-        return $"{level.ToFriendlyString().ToUpper()} - {DateTime.Now:HH-mm-ss-MM-dd-yyyy}: {message}";
+        return $"{level.ToFriendlyString().ToUpper()} - {DateTime.Now:HH-mm-ss-MM-dd-yyyy} - {name}: {message}";
     }
 
     /// <summary>
@@ -77,8 +98,13 @@ public class Logger(bool enableConsoleLogging = true, bool enableFileLogging = f
         sw.WriteLine(FormatMessage(message, level));
     }
 
-    private void ConsoleLog(string? message, LogLevel level = LogLevel.Info) =>
-        Console.WriteLine(FormatMessage(message, level));
+    private void ConsoleLog(string? message, LogLevel level = LogLevel.Info)
+    {
+        if (level >= LogLevel.Error)
+            Console.Error.WriteLine(FormatMessage(message, level));
+        else
+            Console.WriteLine(FormatMessage(message, level));
+    }
 
     /// <inheritdoc/>
     public void Dispose()
