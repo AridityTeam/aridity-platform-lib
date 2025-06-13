@@ -5,21 +5,25 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+
 env:
-  MAIN_BASE_SLN: "AridityTeam.Platform.sln"
+  SOLUTION_FILE: AridityTeam.Platform.sln
+  BUILD_CONFIGURATION: Release
+
 jobs:
-  build:
+  build-and-test:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
     
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: |
           8.0.x
-          6.0.x
+          4.7.2
     
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1.3.1
@@ -27,16 +31,48 @@ jobs:
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v1.2.0
       
+    - name: Cache NuGet packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+      
     - name: Restore dependencies
       run: |
-        nuget restore $Env:MAIN_BASE_SLN
-        dotnet restore $Env:MAIN_BASE_SLN
-      working-directory: ${{ github.workspace }}
+        nuget restore $env:SOLUTION_FILE
+        dotnet restore $env:SOLUTION_FILE
       
-    - name: Build
-      run: msbuild $Env:MAIN_BASE_SLN /p:Configuration=Release /p:Platform="Any CPU"
-      working-directory: ${{ github.workspace }}
+    - name: Build solution
+      run: |
+        msbuild $env:SOLUTION_FILE `
+          /p:Configuration=$env:BUILD_CONFIGURATION `
+          /p:Platform="Any CPU" `
+          /p:UseSharedCompilation=false `
+          /m `
+          /verbosity:minimal
       
-    - name: Test
-      run: dotnet test --no-build --verbosity normal $Env:MAIN_BASE_SLN
-      working-directory: ${{ github.workspace }}
+    - name: Test .NET 8.0
+      run: |
+        dotnet test $env:SOLUTION_FILE `
+          --configuration $env:BUILD_CONFIGURATION `
+          --framework net8.0 `
+          --logger "console;verbosity=detailed" `
+          --results-directory TestResults `
+          --collect:"XPlat Code Coverage"
+      
+    - name: Test .NET Framework 4.7.2
+      run: |
+        vstest.console.exe `
+          .\src\Tests\AridityTeam.Platform.Tests\bin\$env:BUILD_CONFIGURATION\net472\AridityTeam.Platform.Tests.dll `
+          /Logger:console;verbosity=detailed
+      if: success() || failure()
+      
+    - name: Upload test results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: test-results
+        path: TestResults
+        if-no-files-found: ignore
