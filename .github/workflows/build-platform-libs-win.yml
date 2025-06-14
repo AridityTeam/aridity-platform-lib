@@ -3,8 +3,14 @@ name: Build AridityTeam.Platform.* (Windows)
 on:
   push:
     branches: [ "master" ]
+    paths:
+      - '.github/**'
+      - 'src/**'
   pull_request:
     branches: [ "master" ]
+    paths:
+      - '.github/**'
+      - 'src/**'
 
 env:
   SOLUTION_FILE: AridityTeam.Platform.sln
@@ -49,5 +55,6 @@ jobs:
           /p:Configuration=$env:BUILD_CONFIGURATION `
           /p:Platform="Any CPU" `
           /p:UseSharedCompilation=false `
+          /p:ContinuousIntegrationBuild=true `
           /m `
           /verbosity:minimal
