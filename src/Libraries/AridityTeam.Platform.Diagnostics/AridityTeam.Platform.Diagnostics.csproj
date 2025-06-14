@@ -25,6 +25,8 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Description>Diagnostics platform library for the Aridity Team projects.</Description>
     <PackageTags>aridity;base</PackageTags>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'net472'">
