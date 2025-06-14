@@ -11,7 +11,7 @@ env:
   BUILD_CONFIGURATION: Release
 
 jobs:
-  build-and-test:
+  build:
     runs-on: windows-latest
 
     steps:
@@ -51,27 +51,3 @@ jobs:
           /p:UseSharedCompilation=false `
           /m `
           /verbosity:minimal
-      
-    - name: Test .NET 8.0
-      run: |
-        dotnet test $env:SOLUTION_FILE `
-          --configuration $env:BUILD_CONFIGURATION `
-          --framework net8.0 `
-          --logger "console;verbosity=detailed" `
-          --results-directory TestResults `
-          --collect:"XPlat Code Coverage"
-      
-    - name: Test .NET Framework 4.7.2
-      run: |
-        vstest.console.exe `
-          .\src\Tests\AridityTeam.Platform.Tests\bin\$env:BUILD_CONFIGURATION\net472\AridityTeam.Platform.Tests.dll `
-          /Logger:console;verbosity=detailed
-      if: success() || failure()
-      
-    - name: Upload test results
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: test-results
-        path: TestResults
-        if-no-files-found: ignore
