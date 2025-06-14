@@ -11,6 +11,8 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <DocumentationFile>..\..\..\bin\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\AridityTeam.Platform.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
     
   <!--NuGet package info-->
@@ -29,7 +31,7 @@
     <PackageReference Include="System.Reflection.DispatchProxy" Version="4.8.2" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="README.md" Pack="True" PackagePath="\"/>
+    <None Include="README.md" Pack="True" PackagePath="\" />
   </ItemGroup>
 
 </Project>

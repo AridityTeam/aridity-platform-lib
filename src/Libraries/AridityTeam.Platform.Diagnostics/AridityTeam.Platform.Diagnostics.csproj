@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net472;net8.0</TargetFrameworks>
@@ -12,6 +12,8 @@
     <Description>Cross-platform diagnostic and platform utilities for .NET applications.</Description>
     <OutputPath>..\..\..\bin</OutputPath>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\AridityTeam.Platform.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
     
   <!--NuGet package info-->

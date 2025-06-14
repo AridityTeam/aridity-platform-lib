@@ -11,6 +11,8 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <DocumentationFile>..\..\..\bin\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\AridityTeam.Platform.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
     
   <!--NuGet package info-->
