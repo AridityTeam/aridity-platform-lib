@@ -10,11 +10,26 @@
     <OutputPath>..\..\..\bin</OutputPath>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <DocumentationFile>..\..\..\bin\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
-
+    
+  <!--NuGet package info-->
+  <PropertyGroup>
+    <PackageId>$(MSBuildProjectName)</PackageId>
+    <Version>0.0.1</Version>
+    <Authors>PracticeMedicine</Authors>
+    <Company>The Aridity Team</Company>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Description>Core platform library for the Aridity Team projects.</Description>
+    <PackageTags>aridity;base</PackageTags>
+  </PropertyGroup>
+    
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'net472'">
     <PackageReference Include="Nullable" Version="1.3.1" />
     <PackageReference Include="System.Reflection.DispatchProxy" Version="4.8.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="True" PackagePath="\"/>
   </ItemGroup>
 
 </Project>
