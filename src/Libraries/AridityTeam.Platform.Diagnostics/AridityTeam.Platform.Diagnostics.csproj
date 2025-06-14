@@ -25,7 +25,13 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Description>Diagnostics platform library for the Aridity Team projects.</Description>
     <PackageTags>aridity;base</PackageTags>
+    <RepositoryUrl>https://github.com/AridityTeam/aridity-platform-lib</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>Copyright (c) 2025 The Aridity Team</Copyright>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <DebugType>embedded</DebugType>
   </PropertyGroup>
 
