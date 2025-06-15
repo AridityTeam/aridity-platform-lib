@@ -154,6 +154,85 @@ public class Logger : ILogger
     public int MaxLogFileAge { get; set; } = 30;
 
     /// <summary>
+    /// Logs an informational message.
+    /// </summary>
+    /// <param name="message">Value of the message</param>
+    public void Info(string? message) => Log(message, LogLevel.Info);
+
+    /// <summary>
+    /// Logs an informational message with formatting.
+    /// </summary>
+    /// <param name="format">A composite format string.</param>
+    /// <param name="args">An object array that contains zero or more objects to format.</param>
+    public void Info(string format, params object?[] args) => 
+        Log(string.Format(format, args), LogLevel.Info);
+
+    /// <summary>
+    /// Logs an warning message.
+    /// </summary>
+    /// <param name="message">Value of the message</param>
+    public void Warn(string? message) => Log(message, LogLevel.Warn);
+
+    /// <summary>
+    /// Logs an warning message with formatting.
+    /// </summary>
+    /// <param name="format">A composite format string.</param>
+    /// <param name="args">An object array that contains zero or more objects to format.</param>
+    public void Warn(string format, params object?[] args) => 
+        Log(string.Format(format, args), LogLevel.Warn);
+
+    /// <summary>
+    /// Logs an error message.
+    /// </summary>
+    /// <param name="message">Value of the message</param>
+    public void Err(string? message) => Log(message, LogLevel.Error);
+
+    /// <summary>
+    /// Logs an error message with formatting.
+    /// </summary>
+    /// <param name="format">A composite format string.</param>
+    /// <param name="args">An object array that contains zero or more objects to format.</param>
+    public void Err(string format, params object?[] args) => 
+        Log(string.Format(format, args), LogLevel.Error);
+
+    /// <summary>
+    /// Logs an fatal error message.
+    /// </summary>
+    /// <param name="message">Value of the message</param>
+    public void Fatal(string? message) => Log(message, LogLevel.Fatal);
+
+    /// <summary>
+    /// Logs an fatal error message using an thrown exception.
+    /// </summary>
+    /// <param name="ex">Value of the exception</param>
+    public void Fatal(Exception ex) => LogException(ex, LogLevel.Fatal);
+
+    /// <summary>
+    /// Logs an fatal error message with formatting.
+    /// </summary>
+    /// <param name="format">A composite format string.</param>
+    /// <param name="args">An object array that contains zero or more objects to format.</param>
+    public void Fatal(string format, params object?[] args) => 
+        Log(string.Format(format, args), LogLevel.Fatal);
+
+    /// <summary>
+    /// Logs a message with the specified format and arguments.
+    /// </summary>
+    /// <param name="format">A composite format string.</param>
+    /// <param name="args">An object array that contains zero or more objects to format.</param>
+    public void Log(string format, params object?[] args) =>
+        Log(string.Format(format, args), LogLevel.Info);
+
+    /// <summary>
+    /// Logs a message with the specified format and arguments.
+    /// </summary>
+    /// <param name="level">Value of the message severity.</param>
+    /// <param name="format">A composite format string.</param>
+    /// <param name="args">An object array that contains zero or more objects to format.</param>
+    public void Log(LogLevel level, string format, params object?[] args) =>
+        Log(string.Format(format, args), level);
+
+    /// <summary>
     /// Logs a message with the specified level.
     /// </summary>
     public void Log(string? message, LogLevel level = LogLevel.Info)
