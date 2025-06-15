@@ -41,9 +41,10 @@ public class Git : IGit
     /// Initializes a new <seealso cref="Git"/> instance.
     /// </summary>
     /// <param name="config">Git configuration.</param>
-    public Git(IGitConfiguration config)
+    public Git(IGitConfiguration? config)
     {
-        _config = config ?? throw new ArgumentNullException(nameof(config));
+        Requires.NotNull<IGitConfiguration>(config);
+        _config = config;
     }
 
     /// <summary>
