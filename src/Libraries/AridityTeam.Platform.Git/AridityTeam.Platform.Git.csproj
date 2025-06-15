@@ -31,7 +31,6 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <!--.NET Standard 2.0 & .NET Framework v4.7.2-->
