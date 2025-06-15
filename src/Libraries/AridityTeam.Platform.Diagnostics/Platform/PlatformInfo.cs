@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace AridityTeam.Platform.Diagnostics.Platform;
+namespace AridityTeam.Platform;
 
 /// <summary>
 /// Provides information about the current platform and runtime environment.

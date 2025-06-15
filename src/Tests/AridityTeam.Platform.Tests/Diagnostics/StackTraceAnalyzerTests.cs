@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using AridityTeam.Platform.Diagnostics.Diagnostics;
+using AridityTeam.Diagnostics;
 using System.Diagnostics;
 
 namespace AridityTeam.Platform.Tests.Diagnostics;

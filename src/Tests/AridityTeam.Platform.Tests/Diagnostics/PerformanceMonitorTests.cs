@@ -1,6 +1,6 @@
 using System;
 using System.Threading;
-using AridityTeam.Platform.Diagnostics.Diagnostics;
+using AridityTeam.Diagnostics;
 using System.Collections.Generic;
 
 namespace AridityTeam.Platform.Tests.Diagnostics;

@@ -1,6 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
-using AridityTeam.Platform.Diagnostics.Platform;
+using AridityTeam.Platform;
 
 namespace AridityTeam.Platform.Tests.Platform;
 
