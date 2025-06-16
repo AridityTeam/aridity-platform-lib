@@ -8,9 +8,6 @@
     <RootNamespace>AridityTeam</RootNamespace>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Version>1.0.0</Version>
-    <Authors>Aridity Team</Authors>
-    <Description>Cross-platform diagnostic and platform utilities for .NET applications.</Description>
     <OutputPath>..\..\..\bin</OutputPath>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <SignAssembly>True</SignAssembly>
@@ -20,7 +17,7 @@
   <!--NuGet package info-->
   <PropertyGroup>
     <PackageId>$(MSBuildProjectName)</PackageId>
-    <Version>0.0.1</Version>
+    <Version>0.0.2</Version>
     <Authors>PracticeMedicine</Authors>
     <Company>The Aridity Team</Company>
     <PackageReadmeFile>README.md</PackageReadmeFile>
