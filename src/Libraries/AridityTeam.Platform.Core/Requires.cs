@@ -1,4 +1,4 @@
-﻿/*
+﻿ /*
  * Copyright (c) 2025 The Aridity Team
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -310,7 +310,7 @@ public static class Requires
     {
         NotNull(collection, parameterName);
         if (collection.Any(item => item is null))
-            throw new ArgumentException("Collection must not contain any null elements.", parameterName);
+            throw new ArgumentException(ExceptionStrings.Validation_HasNullElements, parameterName);
     }
 
     /// <summary>
@@ -327,7 +327,7 @@ public static class Requires
     {
         NotNull(collection, parameterName);
         if (collection.Distinct().Count() != collection.Count())
-            throw new ArgumentException("Collection must not contain any duplicate elements.", parameterName);
+            throw new ArgumentException(ExceptionStrings.Validation_HasCollectionDuplicates, parameterName);
     }
 
     /// <summary>
@@ -345,7 +345,7 @@ public static class Requires
     {
         NotNull(validValues, nameof(validValues));
         if (!validValues.Contains(value))
-            throw new ArgumentException($"Value must be one of: {string.Join(", ", validValues)}", parameterName);
+            throw new ArgumentException(string.Format(ExceptionStrings.Validation_NotOneOf, string.Join(", ", validValues)), parameterName);
     }
 
     /// <summary>
@@ -361,7 +361,7 @@ public static class Requires
         where T : struct, Enum
     {
         if (!Enum.IsDefined(typeof(T), value))
-            throw new ArgumentException($"Value is not a valid {typeof(T).Name} enum value.", parameterName);
+            throw new ArgumentException(string.Format(ExceptionStrings.Validation_InvalidEnum, typeof(T).Name), parameterName);
     }
 
     /// <summary>
@@ -380,11 +380,11 @@ public static class Requires
         {
             var path = Path.GetFullPath(value);
             if (string.IsNullOrEmpty(path))
-                throw new ArgumentException("Value is not a valid file path.", parameterName);
+                throw new ArgumentException(ExceptionStrings.Validation_InvalidFile, parameterName);
         }
         catch (Exception)
         {
-            throw new ArgumentException("Value is not a valid file path.", parameterName);
+            throw new ArgumentException(ExceptionStrings.Validation_InvalidFile, parameterName);
         }
     }
 
@@ -404,11 +404,11 @@ public static class Requires
         {
             var path = Path.GetFullPath(value);
             if (string.IsNullOrEmpty(path) || Path.HasExtension(path))
-                throw new ArgumentException("Value is not a valid directory path.", parameterName);
+                throw new ArgumentException(ExceptionStrings.Validation_InvalidDirectory, parameterName);
         }
         catch (Exception)
         {
-            throw new ArgumentException("Value is not a valid directory path.", parameterName);
+            throw new ArgumentException(ExceptionStrings.Validation_InvalidDirectory, parameterName);
         }
     }
 
@@ -425,7 +425,7 @@ public static class Requires
     {
         NotNull(value, parameterName);
         if (!System.Net.IPAddress.TryParse(value, out _))
-            throw new ArgumentException("Value is not a valid IP address.", parameterName);
+            throw new ArgumentException(ExceptionStrings.Validation_InvalidIP, parameterName);
     }
 
     /// <summary>
@@ -439,6 +439,6 @@ public static class Requires
     public static void ValidPort(int value, [CallerArgumentExpression(nameof(value))] string? parameterName = null)
     {
         if (value < 0 || value > 65535)
-            throw new ArgumentOutOfRangeException(parameterName, value, "Port number must be between 0 and 65535.");
+            throw new ArgumentOutOfRangeException(parameterName, value, ExceptionStrings.Validation_PortInvalid);
     }
 }
