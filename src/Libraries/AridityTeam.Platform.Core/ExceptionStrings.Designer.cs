@@ -61,6 +61,15 @@ namespace AridityTeam {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Collection must not be empty..
+        /// </summary>
+        internal static string Validation_CollectionEmpty {
+            get {
+                return ResourceManager.GetString("Validation_CollectionEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Collection must contain any duplicate elements..
         /// </summary>
         internal static string Validation_HasCollectionDuplicates {
@@ -84,6 +93,15 @@ namespace AridityTeam {
         internal static string Validation_InvalidDirectory {
             get {
                 return ResourceManager.GetString("Validation_InvalidDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value is not a valid email address..
+        /// </summary>
+        internal static string Validation_InvalidEmail {
+            get {
+                return ResourceManager.GetString("Validation_InvalidEmail", resourceCulture);
             }
         }
         
@@ -115,6 +133,69 @@ namespace AridityTeam {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operation is not valid in the current state..
+        /// </summary>
+        internal static string Validation_InvalidOperationDefault {
+            get {
+                return ResourceManager.GetString("Validation_InvalidOperationDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Object is in a invalid state..
+        /// </summary>
+        internal static string Validation_InvalidStateDefault {
+            get {
+                return ResourceManager.GetString("Validation_InvalidStateDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value is not a valid URL..
+        /// </summary>
+        internal static string Validation_InvalidURL {
+            get {
+                return ResourceManager.GetString("Validation_InvalidURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to String length must be between {0} and {1} characters..
+        /// </summary>
+        internal static string Validation_LengthMustBeInRange {
+            get {
+                return ResourceManager.GetString("Validation_LengthMustBeInRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Condition must be false..
+        /// </summary>
+        internal static string Validation_MustBeFalse {
+            get {
+                return ResourceManager.GetString("Validation_MustBeFalse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Condition must be true..
+        /// </summary>
+        internal static string Validation_MustBeTrue {
+            get {
+                return ResourceManager.GetString("Validation_MustBeTrue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expected value: {0}, Actual value: {1}.
+        /// </summary>
+        internal static string Validation_NotEqualTo {
+            get {
+                return ResourceManager.GetString("Validation_NotEqualTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Value must be one of: {0}.
         /// </summary>
         internal static string Validation_NotOneOf {
@@ -129,6 +210,42 @@ namespace AridityTeam {
         internal static string Validation_PortInvalid {
             get {
                 return ResourceManager.GetString("Validation_PortInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value does not match the required pattern: {0}.
+        /// </summary>
+        internal static string Validation_StringNotMatchingPattern {
+            get {
+                return ResourceManager.GetString("Validation_StringNotMatchingPattern", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value cannot be empty..
+        /// </summary>
+        internal static string Validation_ValueEmpty {
+            get {
+                return ResourceManager.GetString("Validation_ValueEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value cannot be empty or consist only of white-space characters..
+        /// </summary>
+        internal static string Validation_ValueEmptyOrWhitespace {
+            get {
+                return ResourceManager.GetString("Validation_ValueEmptyOrWhitespace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value must be between {0} and {1}..
+        /// </summary>
+        internal static string Validation_ValueMustBeInRange {
+            get {
+                return ResourceManager.GetString("Validation_ValueMustBeInRange", resourceCulture);
             }
         }
     }

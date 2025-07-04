@@ -80,7 +80,7 @@ public static class Requires
             throw new ArgumentNullException(parameterName);
 
         if (value.Length == 0)
-            throw new ArgumentException("Value cannot be empty.", parameterName);
+            throw new ArgumentException(ExceptionStrings.Validation_ValueEmpty, parameterName);
     }
 
     /// <summary>
@@ -98,7 +98,7 @@ public static class Requires
             throw new ArgumentNullException(parameterName);
 
         if (string.IsNullOrWhiteSpace(value))
-            throw new ArgumentException("Value cannot be empty or consist only of white-space characters.", parameterName);
+            throw new ArgumentException(ExceptionStrings.Validation_ValueEmptyOrWhitespace, parameterName);
     }
 
     /// <summary>
@@ -113,7 +113,9 @@ public static class Requires
     public static void EqualTo<T>(T actual, T expected, [CallerArgumentExpression(nameof(actual))] string? parameterName = null)
     {
         if (!EqualityComparer<T>.Default.Equals(actual, expected))
-            throw new ArgumentException($"Expected value: {expected}, Actual value: {actual}", parameterName);
+            throw new ArgumentException(
+                string.Format(ExceptionStrings.Validation_NotEqualTo, 
+                expected, actual), parameterName);
     }
 
     /// <summary>
@@ -127,7 +129,7 @@ public static class Requires
     public static void True(bool condition, string? message = null)
     {
         if (!condition)
-            throw new ArgumentException(message ?? "Condition must be true.");
+            throw new ArgumentException(message ?? ExceptionStrings.Validation_MustBeTrue);
     }
 
     /// <summary>
@@ -141,7 +143,7 @@ public static class Requires
     public static void False(bool condition, string? message = null)
     {
         if (condition)
-            throw new ArgumentException(message ?? "Condition must be false.");
+            throw new ArgumentException(message ?? ExceptionStrings.Validation_MustBeFalse);
     }
 
     /// <summary>
@@ -159,7 +161,9 @@ public static class Requires
         where T : IComparable<T>
     {
         if (value.CompareTo(min) < 0 || value.CompareTo(max) > 0)
-            throw new ArgumentOutOfRangeException(parameterName, value, $"Value must be between {min} and {max}.");
+            throw new ArgumentOutOfRangeException(parameterName, value, 
+                string.Format(ExceptionStrings.Validation_ValueMustBeInRange,
+                min, max));
     }
 
     /// <summary>
@@ -178,7 +182,7 @@ public static class Requires
             throw new ArgumentNullException(parameterName);
 
         if (!collection.Any())
-            throw new ArgumentException("Collection must not be empty.", parameterName);
+            throw new ArgumentException(ExceptionStrings.Validation_CollectionEmpty, parameterName);
     }
 
     /// <summary>
@@ -193,7 +197,7 @@ public static class Requires
     public static void NotEmpty<T>(IEnumerable<T> collection, [CallerArgumentExpression(nameof(collection))] string? parameterName = null)
     {
         if (!collection.Any())
-            throw new ArgumentException("Collection must not be empty.", parameterName);
+            throw new ArgumentException(ExceptionStrings.Validation_CollectionEmpty, parameterName);
     }
 
     /// <summary>
@@ -207,7 +211,7 @@ public static class Requires
     public static void ValidState(bool condition, string? message = null)
     {
         if (!condition)
-            throw new InvalidOperationException(message ?? "Object is in an invalid state.");
+            throw new InvalidOperationException(message ?? ExceptionStrings.Validation_InvalidStateDefault);
     }
 
     /// <summary>
@@ -221,7 +225,7 @@ public static class Requires
     public static void ValidOperation(bool condition, string? message = null)
     {
         if (!condition)
-            throw new InvalidOperationException(message ?? "Operation is not valid in the current state.");
+            throw new InvalidOperationException(message ?? ExceptionStrings.Validation_InvalidOperationDefault);
     }
 
     /// <summary>
@@ -240,7 +244,8 @@ public static class Requires
         NotNull(pattern, nameof(pattern));
 
         if (!Regex.IsMatch(value, pattern))
-            throw new ArgumentException($"Value does not match the required pattern: {pattern}", parameterName);
+            throw new ArgumentException(string.Format(ExceptionStrings.Validation_StringNotMatchingPattern, 
+                pattern), parameterName);
     }
 
     /// <summary>
@@ -258,7 +263,7 @@ public static class Requires
         const string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
         
         if (!Regex.IsMatch(value, emailPattern))
-            throw new ArgumentException("Value is not a valid email address.", parameterName);
+            throw new ArgumentException(ExceptionStrings.Validation_InvalidEmail, parameterName);
     }
 
     /// <summary>
@@ -274,7 +279,7 @@ public static class Requires
     {
         NotNull(value, parameterName);
         if (!Uri.TryCreate(value, UriKind.Absolute, out _))
-            throw new ArgumentException("Value is not a valid URL.", parameterName);
+            throw new ArgumentException(ExceptionStrings.Validation_InvalidURL, parameterName);
     }
 
     /// <summary>
@@ -292,7 +297,8 @@ public static class Requires
     {
         NotNull(value, parameterName);
         if (value.Length < minLength || value.Length > maxLength)
-            throw new ArgumentOutOfRangeException(parameterName, value.Length, $"String length must be between {minLength} and {maxLength} characters.");
+            throw new ArgumentOutOfRangeException(parameterName, value.Length, 
+                string.Format(ExceptionStrings.Validation_LengthMustBeInRange, minLength, maxLength));
     }
 
     /// <summary>
