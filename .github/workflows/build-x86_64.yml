@@ -26,10 +26,13 @@ jobs:
         include:
           - os: windows-latest
             target_framework: [net10.0, net8.0, net472, netstandard2.0]
+            runtime_id: win
           - os: ubuntu-latest
             target_framework: net10.0
+            runtime_id: linux
           - os: ubuntu-latest
             target_framework: net8.0
+            runtime_id: linux
         exclude:
           # exclude the Windows-only frameworks for Linux pls
           - os: ubuntu-latest
@@ -80,7 +83,7 @@ jobs:
       - name: Restore Packages
         run: |
           dotnet restore "${{ github.workspace }}/${{ env.SOLUTION_FILE }}" \
-            --runtime ${{ matrix.build_platform }} \
+            --runtime ${{ matrix.runtime_id }}-${{ matrix.build_platform == 'x64' && 'x64' || 'x86' }} \
             --verbosity minimal \
             --force-evaluate
 
@@ -88,7 +91,7 @@ jobs:
         run: |
           dotnet build "${{ github.workspace }}/${{ env.SOLUTION_FILE }}" \
             --configuration ${{ matrix.build_type }} \
-            --runtime ${{ matrix.build_platform == 'x64' && 'x64' || 'x86' }} \
+            --runtime ${{ matrix.runtime_id }}-${{ matrix.build_platform == 'x64' && 'x64' || 'x86' }} \
             --framework ${{ matrix.target_framework }} \
             --no-restore \
             --verbosity minimal \
