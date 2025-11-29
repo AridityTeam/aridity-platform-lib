@@ -79,40 +79,40 @@ jobs:
 
       - name: Restore Packages
         run: |
-          dotnet restore "${{ github.workspace }}/${{ env.SOLUTION_FILE }}" `
-            --runtime ${{ matrix.build_platform == 'x64' && 'x64' || 'x86' }} `
-            --verbosity minimal `
+          dotnet restore "${{ github.workspace }}/${{ env.SOLUTION_FILE }}" \
+            --runtime ${{ matrix.build_platform }} \
+            --verbosity minimal \
             --force-evaluate
 
       - name: Build Solution
         run: |
-          dotnet build "${{ github.workspace }}/${{ env.SOLUTION_FILE }}" `
-            --configuration ${{ matrix.build_type }} `
-            --runtime ${{ matrix.build_platform == 'x64' && 'x64' || 'x86' }} `
-            --framework ${{ matrix.target_framework }} `
-            --no-restore `
-            --verbosity minimal `
-            --property:WarningLevel=0 `
+          dotnet build "${{ github.workspace }}/${{ env.SOLUTION_FILE }}" \
+            --configuration ${{ matrix.build_type }} \
+            --runtime ${{ matrix.build_platform == 'x64' && 'x64' || 'x86' }} \
+            --framework ${{ matrix.target_framework }} \
+            --no-restore \
+            --verbosity minimal \
+            --property:WarningLevel=0 \
             --property:Platform=${{ matrix.build_platform }}
 
       - name: Run Tests (if any)
         if: matrix.target_framework == 'net10.0'
         run: |
-          dotnet test "${{ github.workspace }}/${{ env.SOLUTION_FILE }}" `
-            --configuration ${{ matrix.build_type }} `
-            --framework ${{ matrix.target_framework }} `
-            --no-build `
-            --verbosity normal `
+          dotnet test "${{ github.workspace }}/${{ env.SOLUTION_FILE }}" \
+            --configuration ${{ matrix.build_type }} \
+            --framework ${{ matrix.target_framework }} \
+            --no-build \
+            --verbosity normal \
             --logger "console;verbosity=normal"
 
       - name: Pack Libraries
         run: |
-          dotnet pack "${{ github.workspace }}/${{ env.SOLUTION_FILE }}" `
-            --configuration ${{ matrix.build_type }} `
-            --framework ${{ matrix.target_framework }} `
-            --runtime ${{ matrix.build_platform == 'x64' && 'x64' || 'x86' }} `
-            --no-build `
-            --output "${{ github.workspace }}/artifacts/packages" `
+          dotnet pack "${{ github.workspace }}/${{ env.SOLUTION_FILE }}" \
+            --configuration ${{ matrix.build_type }} \
+            --framework ${{ matrix.target_framework }} \
+            --runtime ${{ matrix.build_platform == 'x64' && 'x64' || 'x86' }} \
+            --no-build \
+            --output "${{ github.workspace }}/artifacts/packages" \
             --verbosity minimal
 
       - name: Create Artifact Archive
