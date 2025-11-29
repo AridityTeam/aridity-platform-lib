@@ -27,10 +27,8 @@ jobs:
             artifact_name: "AridityTeam.Platform-windows-${{ matrix.build_platform }}-${{ matrix.build_type }}-${{ matrix.target_framework }}"
           - os: ubuntu-latest
             target_framework: net10.0
-            artifact_name: "AridityTeam.Platform-linux-${{ matrix.build_platform }}-${{ matrix.build_type }}-${{ matrix.target_framework }}"
           - os: ubuntu-latest
             target_framework: net8.0
-            artifact_name: "AridityTeam.Platform-linux-${{ matrix.build_platform }}-${{ matrix.build_type }}-${{ matrix.target_framework }}"
         exclude:
           # exclude the Windows-only frameworks for Linux pls
           - os: ubuntu-latest
@@ -124,7 +122,7 @@ jobs:
           $config = "${{ matrix.build_type }}"
           
           $binPath = "${{ github.workspace }}/bin/$platform/$config/$framework"
-          $outputFile = "${{ matrix.artifact_name }}.tar.xz"
+          $outputFile = "AridityTeam.Platform-${{ matrix.os }}-${{ matrix.build_platform }}-${{ matrix.build_type }}-${{ matrix.target_framework }}.tar.xz"
           
           if (Test-Path $binPath) {
             Write-Host "Packing output directory: $binPath"
@@ -143,17 +141,17 @@ jobs:
             }
           else
             Write-Host "##[warning] No build output found for $framework $platform $config"
-            & echo "No build output" | Out-File -FilePath "skip-${{ matrix.artifact_name }}.txt"
+            & echo "No build output" | Out-File -FilePath "skip-AridityTeam.Platform-${{ matrix.os }}-${{ matrix.build_platform }}-${{ matrix.build_type }}-${{ matrix.target_framework }}.txt"
           }
 
       - name: Upload Build Artifact
         if: success() || failure()
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.artifact_name }}
+          name: AridityTeam.Platform-${{ matrix.os }}-${{ matrix.build_platform }}-${{ matrix.build_type }}-${{ matrix.target_framework }}
           path: |
-            ${{ matrix.artifact_name }}.tar.xz
-            skip-${{ matrix.artifact_name }}.txt
+            AridityTeam.Platform-${{ matrix.os }}-${{ matrix.build_platform }}-${{ matrix.build_type }}-${{ matrix.target_framework }}.tar.xz
+            skip-AridityTeam.Platform-${{ matrix.os }}-${{ matrix.build_platform }}-${{ matrix.build_type }}-${{ matrix.target_framework }}.txt
           retention-days: 14
           if-no-files-found: warn
 
@@ -161,7 +159,7 @@ jobs:
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: packages-${{ matrix.artifact_name }}
+          name: packages-AridityTeam.Platform-${{ matrix.os }}-${{ matrix.build_platform }}-${{ matrix.build_type }}-${{ matrix.target_framework }}
           path: ${{ github.workspace }}/artifacts/packages/*.nupkg
           retention-days: 14
           if-no-files-found: ignore
