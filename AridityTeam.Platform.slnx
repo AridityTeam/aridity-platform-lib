@@ -24,6 +24,6 @@
 		</Project>
 	</Folder>
 	<Folder Name="/Workflows/">
-		<File Path=".github/workflows/build-platform-libs-win.yml" />
+		<File Path=".github/workflows/build-x86_64.yml" />
 	</Folder>
 </Solution>

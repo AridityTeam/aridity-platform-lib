@@ -24,7 +24,6 @@ jobs:
         target_framework: [net10.0, net8.0, net472, netstandard2.0]
         include:
           - os: windows-latest
-            artifact_name: "AridityTeam.Platform-windows-${{ matrix.build_platform }}-${{ matrix.build_type }}-${{ matrix.target_framework }}"
           - os: ubuntu-latest
             target_framework: net10.0
           - os: ubuntu-latest
