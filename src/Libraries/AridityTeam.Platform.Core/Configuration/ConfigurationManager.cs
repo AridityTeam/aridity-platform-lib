@@ -63,7 +63,7 @@ namespace AridityTeam.Configuration
         {
             token.ThrowIfCancellationRequested();
             using var stream = File.Open(_configPath!, FileMode.OpenOrCreate, FileAccess.Write);
-            using var sw = new StreamWriter(stream) { AutoFlush = true };
+            using var sw = new StreamWriter(stream);
 
             var serializer = new XmlSerializer(typeof(T));
             using var writer = XmlWriter.Create(sw, new XmlWriterSettings
@@ -72,6 +72,8 @@ namespace AridityTeam.Configuration
                 Async = true
             });
             serializer.Serialize(writer, newConfig);
+
+            await sw.FlushAsync();
         }
     }
 }
