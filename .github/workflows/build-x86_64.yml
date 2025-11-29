@@ -19,6 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        os: [windows-latest, ubuntu-latest]
         build_type: [Release, Debug]
         build_platform: [x64, x86]
         target_framework: [net10.0, net8.0, net472, netstandard2.0]
