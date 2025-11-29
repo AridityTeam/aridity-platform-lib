@@ -24,13 +24,19 @@ jobs:
         target_framework: [net10.0, net8.0, net472, netstandard2.0]
         include:
           - os: windows-latest
-            artifact_name: "AridityTeam.Platform-${{ matrix.build_type }}-${{ matrix.build_platform }}-${{ matrix.target_framework }}-windows"
+            artifact_name: "AridityTeam.Platform-windows-${{ matrix.build_platform }}-${{ matrix.build_type }}-${{ matrix.target_framework }}"
           - os: ubuntu-latest
-            artifact_name: "AridityTeam.Platform-${{ matrix.build_type }}-${{ matrix.build_platform }}-${{ matrix.target_framework }}-linux"
-            # skip older Windows-only frameworks
-            exclude: 
-              - target_framework: net472
-              - target_framework: netstandard2.0
+            target_framework: net10.0
+            artifact_name: "AridityTeam.Platform-linux-${{ matrix.build_platform }}-${{ matrix.build_type }}-${{ matrix.target_framework }}"
+          - os: ubuntu-latest
+            target_framework: net8.0
+            artifact_name: "AridityTeam.Platform-linux-${{ matrix.build_platform }}-${{ matrix.build_type }}-${{ matrix.target_framework }}"
+        exclude:
+          # exclude the Windows-only frameworks for Linux pls
+          - os: ubuntu-latest
+            target_framework: net472
+          - os: ubuntu-latest
+            target_framework: netstandard2.0
 
     steps:
       - name: Checkout code
