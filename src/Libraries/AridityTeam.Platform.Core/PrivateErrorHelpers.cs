@@ -1,0 +1,63 @@
+﻿﻿/*
+ * Copyright (c) 2025 The Aridity Team
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+using System;
+using System.Globalization;
+using System.Reflection;
+
+namespace AridityTeam
+{
+    /// <summary>
+    /// Common utility methods used by the various error detection and reporting classes.
+    /// </summary>
+    internal static class PrivateErrorHelpers
+    {
+        /// <summary>
+        /// Trims away a given surrounding type, returning just the generic type argument,
+        /// if the given type is in fact a generic type with just one type argument and
+        /// the generic type matches a given wrapper type.  Otherwise, it returns the original type.
+        /// </summary>
+        /// <param name="type">The type to trim, or return unmodified.</param>
+        /// <param name="wrapper">The SomeType&lt;&gt; generic type definition to trim away from <paramref name="type"/> if it is present.</param>
+        /// <returns><paramref name="type"/>, if it is not a generic type instance of <paramref name="wrapper"/>; otherwise the type argument.</returns>
+        internal static Type TrimGenericWrapper(Type type, Type wrapper)
+        {
+            Type[] typeArgs;
+            if (type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == wrapper && (typeArgs = type.GenericTypeArguments).Length == 1)
+            {
+                return typeArgs[0];
+            }
+            else
+            {
+                return type;
+            }
+        }
+
+        /// <summary>
+        /// Helper method that formats string arguments.
+        /// </summary>
+        /// <returns>The formatted string.</returns>
+        internal static string Format(string format, params object?[] arguments)
+        {
+            return string.Format(CultureInfo.CurrentCulture, format, arguments);
+        }
+    }
+}

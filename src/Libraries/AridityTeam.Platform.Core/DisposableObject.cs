@@ -21,37 +21,47 @@
 
 using System;
 
-namespace AridityTeam.Util.Git;
+using AridityTeam.Util;
 
-/// <summary>
-/// 
-/// </summary>
-[Serializable]
-public class GitException : Exception
+namespace AridityTeam
 {
     /// <summary>
-    /// 
+    /// Provides a base class for objects that implement the <see cref="IDisposable"/> pattern, with support for
+    /// observing the disposed state.
     /// </summary>
-    public GitException() { }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="message"></param>
-    public GitException(string message) : base(message) { }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="inner"></param>
-    public GitException(string message, Exception inner) : base(message, inner) { }
+    public abstract class DisposableObject : IDisposable, IDisposableObservable
+    {
+        private bool _disposed;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    [Obsolete]
-    protected GitException(
-      System.Runtime.Serialization.SerializationInfo info,
-      System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+        /// <summary>
+        /// Checks whether the object has been disposed or not.
+        /// </summary>
+        public bool IsDisposed => _disposed;
+
+        /// <summary>
+        /// Disposes and releasees managed resources used by the object.
+        /// </summary>
+        protected abstract void DisposeManagedResources();
+
+        private void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    DisposeManagedResources();
+                }
+
+                _disposed = true;
+            }
+        }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+    }
 }

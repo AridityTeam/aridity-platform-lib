@@ -19,39 +19,34 @@
  * SOFTWARE.
  */
 
-using System;
-
-namespace AridityTeam.Util.Git;
-
-/// <summary>
-/// 
-/// </summary>
-[Serializable]
-public class GitException : Exception
+namespace AridityTeam.Logging
 {
     /// <summary>
-    /// 
+    /// The data of the log message event.
     /// </summary>
-    public GitException() { }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="message"></param>
-    public GitException(string message) : base(message) { }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="inner"></param>
-    public GitException(string message, Exception inner) : base(message, inner) { }
+    public class LogMessageEventArgs : LogEventArgs
+    {
+        /// <summary>
+        /// The value of the log message string.
+        /// </summary>
+        public string Message { get; }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    [Obsolete]
-    protected GitException(
-      System.Runtime.Serialization.SerializationInfo info,
-      System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+        /// <summary>
+        /// The value of the log message's level.
+        /// </summary>
+        public MessageLevel Level { get; }
+
+        /// <summary>
+        /// Creates a new event data instance.
+        /// </summary>
+        /// <param name="logger">The value of the current logger where the event was invoked from.</param>
+        /// <param name="message">The value of the log message string.</param>
+        /// <param name="level">The value of the log message's level.</param>
+        public LogMessageEventArgs(ILogger logger, string message, MessageLevel level)
+            : base(logger)
+        {
+            Level = level;
+            Message = message;
+        }
+    }
 }

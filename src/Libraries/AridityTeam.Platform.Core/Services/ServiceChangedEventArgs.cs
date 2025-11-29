@@ -21,37 +21,26 @@
 
 using System;
 
-namespace AridityTeam.Util.Git;
-
-/// <summary>
-/// 
-/// </summary>
-[Serializable]
-public class GitException : Exception
+namespace AridityTeam.Services
 {
     /// <summary>
-    /// 
+    /// Event data for whenever the service in the <seealso cref="IServiceManager"/> has been changed.
     /// </summary>
-    public GitException() { }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="message"></param>
-    public GitException(string message) : base(message) { }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="inner"></param>
-    public GitException(string message, Exception inner) : base(message, inner) { }
+    /// <remarks>
+    /// Creates a new instance of the event data.
+    /// </remarks>
+    /// <param name="serviceType">The value of the changed service's type.</param>
+    /// <param name="instance">The value of the changed service's instance</param>
+    public sealed class ServiceChangedEventArgs(Type serviceType, object? instance) : EventArgs
+    {
+        /// <summary>
+        /// The changed service's type.
+        /// </summary>
+        public Type ServiceType { get; } = serviceType;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    [Obsolete]
-    protected GitException(
-      System.Runtime.Serialization.SerializationInfo info,
-      System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+        /// <summary>
+        /// The change service's instance.
+        /// </summary>
+        public object? ServiceInstance { get; } = instance;
+    }
 }

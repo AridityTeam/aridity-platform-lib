@@ -19,39 +19,25 @@
  * SOFTWARE.
  */
 
-using System;
-
-namespace AridityTeam.Util.Git;
-
-/// <summary>
-/// 
-/// </summary>
-[Serializable]
-public class GitException : Exception
+namespace AridityTeam.Logging
 {
     /// <summary>
-    /// 
+    /// Base class for listening to logger events.
     /// </summary>
-    public GitException() { }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="message"></param>
-    public GitException(string message) : base(message) { }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="inner"></param>
-    public GitException(string message, Exception inner) : base(message, inner) { }
+    public interface ILogEventListener
+    {
+        /// <summary>
+        /// Called when a logger event has been invoked.
+        /// </summary>
+        /// <param name="sender">The value of the event sender.</param>
+        /// <param name="e">The value of the event data.</param>
+        void OnLogEvent(object sender, LogEventArgs e);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    [Obsolete]
-    protected GitException(
-      System.Runtime.Serialization.SerializationInfo info,
-      System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+        /// <summary>
+        /// Called when a log message event has been invoked.
+        /// </summary>
+        /// <param name="sender">The value of the event sender.</param>
+        /// <param name="e">The value of the event data.</param>
+        void OnLogMessageEvent(object sender, LogMessageEventArgs e);
+    }
 }

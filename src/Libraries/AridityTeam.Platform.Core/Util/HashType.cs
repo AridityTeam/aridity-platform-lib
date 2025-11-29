@@ -20,38 +20,43 @@
  */
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace AridityTeam.Util.Git;
-
-/// <summary>
-/// 
-/// </summary>
-[Serializable]
-public class GitException : Exception
+namespace AridityTeam.Util
 {
     /// <summary>
+    /// Types of security hashes.
     /// 
+    /// Hash generator methods from https://gist.github.com/rmacfie/828054/a2ed7ed1c023fbb7781e8f11ac69f2b0d780a717.
     /// </summary>
-    public GitException() { }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="message"></param>
-    public GitException(string message) : base(message) { }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="inner"></param>
-    public GitException(string message, Exception inner) : base(message, inner) { }
+    public enum HashType
+    {
+        /// <summary>
+        /// MD5
+        /// </summary>
+        Md5,
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    [Obsolete]
-    protected GitException(
-      System.Runtime.Serialization.SerializationInfo info,
-      System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+        /// <summary>
+        /// SHA-1
+        /// </summary>
+        Sha1,
+
+        /// <summary>
+        /// SHA-256
+        /// </summary>
+        Sha256,
+
+        /// <summary>
+        /// SHA-384
+        /// </summary>
+        Sha384,
+
+        /// <summary>
+        /// SHA-512
+        /// </summary>
+        Sha512
+    }
 }

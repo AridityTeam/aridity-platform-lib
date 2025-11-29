@@ -20,38 +20,19 @@
  */
 
 using System;
+using System.Diagnostics;
 
-namespace AridityTeam.Util.Git;
-
-/// <summary>
-/// 
-/// </summary>
-[Serializable]
-public class GitException : Exception
+namespace AridityTeam.Logging
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public GitException() { }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="message"></param>
-    public GitException(string message) : base(message) { }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="inner"></param>
-    public GitException(string message, Exception inner) : base(message, inner) { }
+    internal class DebugLogEventListener : ILogEventListener
+    {
+        public void OnLogEvent(object sender, LogEventArgs e)
+        {
+        }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    [Obsolete]
-    protected GitException(
-      System.Runtime.Serialization.SerializationInfo info,
-      System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+        public void OnLogMessageEvent(object sender, LogMessageEventArgs e)
+        {
+            Debug.WriteLine(e.Message, e.Level.ToString());
+        }
+    }
 }

@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿/*
  * Copyright (c) 2025 The Aridity Team
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,30 +19,109 @@
  * SOFTWARE.
  */
 
+using System;
+using System.Collections.Generic;
 using AridityTeam;
 
 #if !NET5_0_OR_GREATER || !NETCOREAPP3_0_OR_GREATER
 namespace System.Runtime.CompilerServices
 {
-    /// <summary>
-    /// 
-    /// </summary>
     [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = false)]
     internal sealed class CallerArgumentExpressionAttribute : Attribute
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="parameterName"></param>
         public CallerArgumentExpressionAttribute(string parameterName)
         {
             ParameterName = parameterName;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public string ParameterName { get; }
+    }
+
+    /// <summary>Indicates the attributed type is to be used as an interpolated string handler.</summary>
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = false, Inherited = false)]
+    internal sealed class InterpolatedStringHandlerAttribute : Attribute
+    {
+        /// <summary>Initializes the <see cref="InterpolatedStringHandlerAttribute"/>.</summary>
+        public InterpolatedStringHandlerAttribute() { }
+    }
+
+    [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = false)]
+    internal sealed class InterpolatedStringHandlerArgumentAttribute : Attribute
+    {
+        public InterpolatedStringHandlerArgumentAttribute(string argument) => this.Arguments = new string[] { argument };
+
+        public InterpolatedStringHandlerArgumentAttribute(params string[] arguments) => this.Arguments = arguments;
+
+        public string[] Arguments { get; }
+    }
+}
+#endif
+
+#if !NET8_0_OR_GREATER
+namespace System.Diagnostics.CodeAnalysis
+{
+    /// <summary>Specifies the syntax used in a string.</summary>
+    [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
+    internal sealed class StringSyntaxAttribute : Attribute
+    {
+        /// <summary>Initializes the <see cref="StringSyntaxAttribute"/> with the identifier of the syntax used.</summary>
+        /// <param name="syntax">The syntax identifier.</param>
+        public StringSyntaxAttribute(string syntax)
+        {
+            Syntax = syntax;
+            Arguments = new object[] { };
+        }
+
+        /// <summary>Initializes the <see cref="StringSyntaxAttribute"/> with the identifier of the syntax used.</summary>
+        /// <param name="syntax">The syntax identifier.</param>
+        /// <param name="arguments">Optional arguments associated with the specific syntax employed.</param>
+        public StringSyntaxAttribute(string syntax, params object[] arguments)
+        {
+            Syntax = syntax;
+            Arguments = arguments;
+        }
+
+        /// <summary>Gets the identifier of the syntax used.</summary>
+        public string Syntax { get; }
+
+        /// <summary>Optional arguments associated with the specific syntax employed.</summary>
+        public object[] Arguments { get; }
+
+        /// <summary>The syntax identifier for strings containing composite formats for string formatting.</summary>
+        public const string CompositeFormat = nameof(CompositeFormat);
+
+        /// <summary>The syntax identifier for strings containing date format specifiers.</summary>
+        public const string DateOnlyFormat = nameof(DateOnlyFormat);
+
+        /// <summary>The syntax identifier for strings containing date and time format specifiers.</summary>
+        public const string DateTimeFormat = nameof(DateTimeFormat);
+
+        /// <summary>The syntax identifier for strings containing <see cref="Enum"/> format specifiers.</summary>
+        public const string EnumFormat = nameof(EnumFormat);
+
+        /// <summary>The syntax identifier for strings containing <see cref="Guid"/> format specifiers.</summary>
+        public const string GuidFormat = nameof(GuidFormat);
+
+        /// <summary>The syntax identifier for strings containing JavaScript Object Notation (JSON).</summary>
+        public const string Json = nameof(Json);
+
+        /// <summary>The syntax identifier for strings containing numeric format specifiers.</summary>
+        public const string NumericFormat = nameof(NumericFormat);
+
+        /// <summary>The syntax identifier for strings containing regular expressions.</summary>
+        public const string Regex = nameof(Regex);
+
+        /// <summary>The syntax identifier for strings containing time format specifiers.</summary>
+        public const string TimeOnlyFormat = nameof(TimeOnlyFormat);
+
+        /// <summary>The syntax identifier for strings containing <see cref="TimeSpan"/> format specifiers.</summary>
+        public const string TimeSpanFormat = nameof(TimeSpanFormat);
+
+        /// <summary>The syntax identifier for strings containing URIs.</summary>
+        public const string Uri = nameof(Uri);
+
+        /// <summary>The syntax identifier for strings containing XML.</summary>
+        public const string Xml = nameof(Xml);
     }
 }
 #endif
@@ -83,7 +162,7 @@ namespace System.Collections.Generic
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static bool TryAdd<TKey, TValue>(this Dictionary<TKey, TValue> dict, TKey key, TValue value) where TKey : notnull
+        public static bool TryAdd<TKey, TValue>(this Dictionary<TKey, TValue> dict, TKey key, TValue value) where TKey : class
         {
             Requires.NotNull(dict);
 

@@ -1,4 +1,4 @@
-﻿﻿/*
+﻿/*
  * Copyright (c) 2025 The Aridity Team
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,37 +21,25 @@
 
 using System;
 
-namespace AridityTeam.Util.Git;
-
-/// <summary>
-/// 
-/// </summary>
-[Serializable]
-public class GitException : Exception
+namespace AridityTeam.Logging
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public GitException() { }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="message"></param>
-    public GitException(string message) : base(message) { }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="inner"></param>
-    public GitException(string message, Exception inner) : base(message, inner) { }
+	/// <summary>
+	/// The data of the log event.
+	/// </summary>
+	public class LogEventArgs : EventArgs
+	{
+		/// <summary>
+		/// The logger where the event was invoked from.
+		/// </summary>
+		public ILogger Logger;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    [Obsolete]
-    protected GitException(
-      System.Runtime.Serialization.SerializationInfo info,
-      System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+        /// <summary>
+        /// Creates a new event data instance.
+        /// </summary>
+        /// <param name="logger">The value of the current logger where the event was invoked from.</param>
+        public LogEventArgs(ILogger logger)
+		{
+			Logger = logger;
+		}
+	}
 }

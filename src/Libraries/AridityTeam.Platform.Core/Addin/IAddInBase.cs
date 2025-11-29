@@ -21,37 +21,44 @@
 
 using System;
 
-namespace AridityTeam.Util.Git;
+using AridityTeam.Util;
 
-/// <summary>
-/// 
-/// </summary>
-[Serializable]
-public class GitException : Exception
+namespace AridityTeam.Addin
 {
     /// <summary>
-    /// 
+    /// Represents the base of the add-in that can be initialized or disposed by <seealso cref="AddInManager{TInterface}"/>.
     /// </summary>
-    public GitException() { }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="message"></param>
-    public GitException(string message) : base(message) { }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="inner"></param>
-    public GitException(string message, Exception inner) : base(message, inner) { }
+    public interface IAddInBase : IDisposable, IDisposableObservable
+    {
+        /// <summary>
+        /// The name of the add-in.
+        /// </summary>
+        string Name { get; }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    [Obsolete]
-    protected GitException(
-      System.Runtime.Serialization.SerializationInfo info,
-      System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+        /// <summary>
+        /// The prefix of the add-in.
+        /// </summary>
+        string Prefix { get; }
+
+        /// <summary>
+        /// Author of the add-in.
+        /// </summary>
+        string Author { get; }
+
+        /// <summary>
+        /// Optional description of the add-in.
+        /// </summary>
+        string Description { get; }
+
+        /// <summary>
+        /// The version of the add-in.
+        /// </summary>
+        Version Version { get; }
+
+        /// <summary>
+        /// Where most add-in stuff are initialized.
+        /// </summary>
+        /// <returns></returns>
+        bool Initialize();
+    }
 }

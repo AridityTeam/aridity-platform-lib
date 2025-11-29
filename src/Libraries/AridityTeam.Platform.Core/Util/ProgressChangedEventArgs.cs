@@ -1,4 +1,4 @@
-﻿﻿/*
+﻿/*
  * Copyright (c) 2025 The Aridity Team
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,37 +21,20 @@
 
 using System;
 
-namespace AridityTeam.Util.Git;
+namespace AridityTeam.Util;
 
 /// <summary>
-/// 
+/// Event data when the current progress in an Git operation has changed.
 /// </summary>
-[Serializable]
-public class GitException : Exception
+public class ProgressChangedEventArgs(int percentage, string? message = null) : EventArgs
 {
     /// <summary>
-    /// 
+    /// Gets the current perecentage value of the current progress.
     /// </summary>
-    public GitException() { }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="message"></param>
-    public GitException(string message) : base(message) { }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="inner"></param>
-    public GitException(string message, Exception inner) : base(message, inner) { }
+    public int Perecentage => percentage;
 
     /// <summary>
-    /// 
+    /// Gets the current message of the current progress.
     /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    [Obsolete]
-    protected GitException(
-      System.Runtime.Serialization.SerializationInfo info,
-      System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+    public string? Message => message;
 }

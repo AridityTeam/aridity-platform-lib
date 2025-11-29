@@ -23,7 +23,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 
-namespace AridityTeam.Util.Git;
+namespace AridityTeam.Util;
 
 /// <summary>
 /// Default implementation of <see cref="IGitConfiguration"/>.

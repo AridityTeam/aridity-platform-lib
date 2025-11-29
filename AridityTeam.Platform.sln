@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36127.28
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11222.15 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
@@ -9,13 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AridityTeam.Platform.Core",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FC41E672-2164-4773-8FFB-5153CF8914AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterfaceExposingShared", "src\Tests\InterfaceExposingShared\InterfaceExposingShared.csproj", "{3B491682-D5A3-4755-97FD-2AFCA41DB26A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InterfaceExposing", "InterfaceExposing", "{B3DC3B27-4FAA-40BD-801C-30EA70FAE6C2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AridityTeam.Platform.Tests", "src\Tests\AridityTeam.Platform.Tests\AridityTeam.Platform.Tests.csproj", "{DC1BC1AB-6F60-4966-B35D-7B15AFEDFCBC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AridityTeam.Platform.Git", "src\Libraries\AridityTeam.Platform.Git\AridityTeam.Platform.Git.csproj", "{43EA6C15-78C3-4D4E-94A8-D29739553698}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{36F6E058-D934-4D85-A889-3068AB46B3FF}"
 	ProjectSection(SolutionItems) = preProject
@@ -25,8 +19,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AridityTeam.Platform.Diagnostics", "src\Libraries\AridityTeam.Platform.Diagnostics\AridityTeam.Platform.Diagnostics.csproj", "{2243A83F-90D8-1F9A-57A9-C358736E0673}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{BD3CECDF-A14D-492C-B675-5F2152069067}"
 	ProjectSection(SolutionItems) = preProject
@@ -43,33 +35,17 @@ Global
 		{D4481BFF-6AE7-4F7B-A3B7-3B9E128680DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4481BFF-6AE7-4F7B-A3B7-3B9E128680DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4481BFF-6AE7-4F7B-A3B7-3B9E128680DE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3B491682-D5A3-4755-97FD-2AFCA41DB26A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3B491682-D5A3-4755-97FD-2AFCA41DB26A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3B491682-D5A3-4755-97FD-2AFCA41DB26A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3B491682-D5A3-4755-97FD-2AFCA41DB26A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DC1BC1AB-6F60-4966-B35D-7B15AFEDFCBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DC1BC1AB-6F60-4966-B35D-7B15AFEDFCBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC1BC1AB-6F60-4966-B35D-7B15AFEDFCBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC1BC1AB-6F60-4966-B35D-7B15AFEDFCBC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{43EA6C15-78C3-4D4E-94A8-D29739553698}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{43EA6C15-78C3-4D4E-94A8-D29739553698}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{43EA6C15-78C3-4D4E-94A8-D29739553698}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{43EA6C15-78C3-4D4E-94A8-D29739553698}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2243A83F-90D8-1F9A-57A9-C358736E0673}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2243A83F-90D8-1F9A-57A9-C358736E0673}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2243A83F-90D8-1F9A-57A9-C358736E0673}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2243A83F-90D8-1F9A-57A9-C358736E0673}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D4481BFF-6AE7-4F7B-A3B7-3B9E128680DE} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{3B491682-D5A3-4755-97FD-2AFCA41DB26A} = {B3DC3B27-4FAA-40BD-801C-30EA70FAE6C2}
-		{B3DC3B27-4FAA-40BD-801C-30EA70FAE6C2} = {FC41E672-2164-4773-8FFB-5153CF8914AE}
 		{DC1BC1AB-6F60-4966-B35D-7B15AFEDFCBC} = {FC41E672-2164-4773-8FFB-5153CF8914AE}
-		{43EA6C15-78C3-4D4E-94A8-D29739553698} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{2243A83F-90D8-1F9A-57A9-C358736E0673} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6C9B6D54-A633-44AC-9F82-C711C7148915}

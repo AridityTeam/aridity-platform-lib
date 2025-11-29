@@ -21,7 +21,7 @@
 
 using System;
 
-namespace AridityTeam.Util.Git;
+namespace AridityTeam.Util;
 
 /// <summary>
 /// 

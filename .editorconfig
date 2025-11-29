@@ -4,8 +4,5 @@ file_header = "Copyright (c) 2025 The Aridity Team\nPermission is hereby granted
 
 # All files
 [*]
-indent_style = space
-
-# Xml files
-[*.xml]
-indent_size = 2
+indent_style = tabs
+indent_size = 4

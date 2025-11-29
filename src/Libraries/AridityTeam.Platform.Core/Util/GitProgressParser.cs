@@ -20,38 +20,39 @@
  */
 
 using System;
+using System.Text.RegularExpressions;
 
-namespace AridityTeam.Util.Git;
+namespace AridityTeam.Util;
 
 /// <summary>
 /// 
 /// </summary>
-[Serializable]
-public class GitException : Exception
+internal static class GitProgressParser
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public GitException() { }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="message"></param>
-    public GitException(string message) : base(message) { }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="inner"></param>
-    public GitException(string message, Exception inner) : base(message, inner) { }
+    // Matches patterns like: "Receiving objects:  67% (354/527)"
+    private static readonly Regex ProgressRegex = new(
+        @"([\w\s]+):\s+(\d+)%\s*(?:\((\d+)/(\d+)\))?",
+        RegexOptions.Compiled);
+
+    private static readonly string[] CloneStages = {
+        "Receiving objects",
+        "Resolving deltas",
+        "Updating files"
+    };
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    [Obsolete]
-    protected GitException(
-      System.Runtime.Serialization.SerializationInfo info,
-      System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+    /// <param name="line"></param>
+    /// <returns></returns>
+    public static (string Operation, int Percentage)? ParseProgress(string line)
+    {
+        var match = ProgressRegex.Match(line);
+        if (!match.Success) return null;
+
+        var operation = match.Groups[1].Value.Trim();
+        var percentage = int.Parse(match.Groups[2].Value);
+
+        return (operation, percentage);
+    }
 }

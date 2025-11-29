@@ -21,37 +21,37 @@
 
 using System;
 
-namespace AridityTeam.Util.Git;
-
-/// <summary>
-/// 
-/// </summary>
-[Serializable]
-public class GitException : Exception
+namespace AridityTeam.Logging
 {
     /// <summary>
-    /// 
+    /// Specifies the output of the logger.
     /// </summary>
-    public GitException() { }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="message"></param>
-    public GitException(string message) : base(message) { }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="inner"></param>
-    public GitException(string message, Exception inner) : base(message, inner) { }
+    [Flags]
+    public enum LoggerDestination
+    {
+        /// <summary>
+        /// Outputs messages into the debug output.
+        /// </summary>
+        Debug = 0,
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    [Obsolete]
-    protected GitException(
-      System.Runtime.Serialization.SerializationInfo info,
-      System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+        /// <summary>
+        /// Outputs messages into the application's console output.
+        /// </summary>
+        Console,
+
+        /// <summary>
+        /// Outputs messages into the specified *.log file.
+        /// </summary>
+        File,
+
+        /// <summary>
+        /// Outputs messages into the application's error output. (stderr)
+        /// </summary>
+        Error,
+
+        /// <summary>
+        /// Default value.
+        /// </summary>
+        Default = Console
+    }
 }
