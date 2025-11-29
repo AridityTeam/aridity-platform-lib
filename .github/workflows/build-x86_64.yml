@@ -91,7 +91,6 @@ jobs:
         run: |
           dotnet build "${{ github.workspace }}/${{ env.SOLUTION_FILE }}" \
             --configuration ${{ matrix.build_type }} \
-            --runtime ${{ matrix.runtime_id }}-${{ matrix.build_platform == 'x64' && 'x64' || 'x86' }} \
             --framework ${{ matrix.target_framework }} \
             --no-restore \
             --verbosity minimal \
@@ -113,7 +112,7 @@ jobs:
           dotnet pack "${{ github.workspace }}/${{ env.SOLUTION_FILE }}" \
             --configuration ${{ matrix.build_type }} \
             --framework ${{ matrix.target_framework }} \
-            --runtime ${{ matrix.build_platform == 'x64' && 'x64' || 'x86' }} \
+            --runtime ${{ matrix.runtime_id }}-${{ matrix.build_platform == 'x64' && 'x64' || 'x86' }} \
             --no-build \
             --output "${{ github.workspace }}/artifacts/packages" \
             --verbosity minimal
